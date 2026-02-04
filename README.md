@@ -165,7 +165,7 @@ If the first request is slow:
 ## Support
 
 For updates, development discussion, and help, join our Discord:  
-[https://discord.gg/3kF8rbEUEF](https://discord.gg/3kF8rbEUEF)
+[https://discord.gg/SapphAi](https://discord.gg/3kF8rbEUEF)
 
 ⚠️ **Security Advice:**  
 If you fork or clone this project, set your GitHub repository to **Private**.  
