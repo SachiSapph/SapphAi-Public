@@ -3,12 +3,17 @@
 ## What is This?
 
 SapphAI is an AI brain for games.  
-It lets NPCs think, talk, and respond naturally to players using AI.
+It is designed to make NPCs smarter and allow natural chat between players and game characters.
 
-You run SapphAI as a small online server, and your game (for example, a Unity game) sends messages to it.  
-The server replies with smart AI responses that you can use for NPC dialogue, behavior, or player chat.
+SapphAI runs as a **separate server**, not inside Unity itself.  
+This makes it safer and more flexible, because your AI logic and API keys stay outside your game build.
 
-This guide is written for **non-technical users** and explains everything step by step.
+Important notes about this version:
+- This is a **chat-bot only**
+- There is **no TTS (Text-to-Speech)**  
+- There is **no STT/SST (Speech-to-Text)**  
+- It is a **mid to high level AI chat system** made specifically for **game development**
+- It is safe to use because it runs on your own PC and GitHub / Render setup
 
 ---
 
@@ -26,9 +31,9 @@ Download Visual Studio Code:
 
 After installing both, open **VS Code**.
 
-Open the built-in terminal in VS Code:
-- Windows: `Ctrl + ``  
-- Mac: `Cmd + ``  
+Open the built-in terminal:
+- **Windows:** `Ctrl + ``  
+- **Mac:** `Cmd + ``  
 
 Run these commands:
 
@@ -37,7 +42,7 @@ git clone https://github.com/SachiSapph/SapphAi-Public.git
 cd SapphAi-Public
 ```
 
-This downloads the project and opens its folder.
+This downloads the project to your computer.
 
 ---
 
@@ -49,15 +54,16 @@ SapphAI uses OpenAI to power NPC intelligence.
 2. Sign in or create an account
 3. Click **View API keys**
 4. Click **Create new secret key**
-5. Copy the key and save it somewhere safe
+5. Copy the key and keep it safe
 
-You will use this key in the next step.
+⚠️ **Important:** Never share your API key with anyone.
+⚠️ **Important:** OpenAi does require money (e.g. $10).
 
 ---
 
 ### Step 3: Add API Key to Project
 
-In VS Code, inside the project folder:
+Inside the project folder in VS Code:
 
 1. Create a new file named `.env`
 2. Open the file and add **exactly** this line:
@@ -74,15 +80,15 @@ Save the file.
 
 ### Step 4: Deploy to Render
 
-Render lets you run SapphAI online for free.
+Render allows you to run the AI server online for free.
 
 1. Go to: [https://render.com](https://render.com)
 2. Sign up or log in
 3. Click **New +**
-4. Choose **Web Service**
+4. Select **Web Service**
 5. Connect your GitHub account
 6. Select the **SapphAi-Public** repository
-7. Set these options:
+7. Set the following options:
    - Runtime: **Node**
    - Branch: `main`
 8. Add an Environment Variable:
@@ -90,41 +96,49 @@ Render lets you run SapphAI online for free.
    - Value: your OpenAI API key
 9. Click **Create Web Service**
 
-Wait until the deployment finishes successfully.
+Wait until deployment finishes.
 
 ---
 
 ### Step 5: Get Your Server URL
 
-After deployment is done:
+After deployment is complete:
 
-1. Open your service on Render
-2. Copy the **Public URL** at the top  
-   Example:
+1. Open your service in Render
+2. Copy the **Public URL** shown at the top
+
+Example:
 
 ```bash
 https://sapphai.onrender.com
 ```
 
-This URL is your AI server address.  
-You will use it inside your game.
+This is the server address your game will connect to.
 
 ---
 
 ## How to Use in Unity
 
 1. Open your Unity project
-2. Decide where NPC dialogue or player chat happens
+2. Decide where NPC dialogue or player chat should happen
 3. Send HTTP requests to your SapphAI server URL
-4. Send player or NPC text as input
-5. Use the AI response as dialogue or behavior
+4. Send player or NPC messages as text
+5. Use the AI response for dialogue or logic
 
-Unity controls animations, movement, and visuals.  
-SapphAI controls thinking and conversation.
+Unity handles:
+- Animations
+- Movement
+- UI
+- Gameplay
+
+SapphAI handles:
+- Thinking
+- Conversation
+- AI responses
 
 You can connect using:
 - `UnityWebRequest`
-- Any HTTP networking method you prefer
+- Any HTTP client you prefer
 
 ---
 
@@ -132,15 +146,15 @@ You can connect using:
 
 If the server does not respond:
 - Check Render logs
-- Make sure deployment finished successfully
+- Make sure deployment completed successfully
 
-If AI responses are empty:
+If AI responses are missing:
 - Confirm your OpenAI API key is correct
-- Make sure the environment variable exists in Render
+- Make sure the environment variable exists on Render
 
 If Unity cannot connect:
-- Check the server URL
-- Make sure it starts with `https://`
+- Verify the server URL
+- Ensure it starts with `https://`
 
 If the first request is slow:
 - Free Render services sleep when inactive
@@ -150,8 +164,15 @@ If the first request is slow:
 
 ## Support
 
-Report issues or ask for help here:  
+For updates, development discussion, and help, join our Discord:  
+[https://discord.gg/3kF8rbEUEF](https://discord.gg/3kF8rbEUEF)
+
+⚠️ **Security Advice:**  
+If you fork or clone this project, set your GitHub repository to **Private**.  
+This prevents others from abusing your OpenAI API key or server scripts.
+
+Bug reports and issues:  
 [https://github.com/SachiSapph/SapphAi-Public/issues](https://github.com/SachiSapph/SapphAi-Public/issues)
 
-Project repository:  
+Main repository:  
 [https://github.com/SachiSapph/SapphAi-Public](https://github.com/SachiSapph/SapphAi-Public)
