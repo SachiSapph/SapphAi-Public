@@ -1,0 +1,28 @@
+{
+    "response_rules": {
+        "max_length": 500,
+        "min_length": 10,
+        "use_formatting": true,
+        "line_breaks": true,
+        "bullet_points": true
+    },
+    "safety_rules": {
+        "blocked_topics": [
+            "harm",
+            "exploits",
+            "private_data",
+            "api_details"
+        ],
+        "allowed_origins": [
+            "*"
+        ],
+        "max_requests_per_minute": 60
+    },
+    "behavior_rules": {
+        "always_truthful": true,
+        "no_sugar_coating": true,
+        "admit_limitations": true,
+        "stay_in_character": true,
+        "mention_vision_when_relevant": true
+    }
+}
