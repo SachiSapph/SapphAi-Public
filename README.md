@@ -216,7 +216,7 @@ Future and more advanced versions may:
 - Be **support-based or subscription-based**
 - Include additional features and improvements
 
-For news, future access, or setup help, please join our Discord.
+### For news, future access, or setup help, please join our Discord.
 
 ---
 
