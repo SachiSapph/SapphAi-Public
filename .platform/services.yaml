@@ -1,0 +1,9 @@
+app:
+  type: nodejs:18
+  disk: 1024
+  relationships:
+    database: "db:postgresql"
+  
+db:
+  type: postgresql:14
+  disk: 1024

@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: sapphai
+    env: docker
+    dockerfilePath: ./Dockerfile
+    plan: free
+    branch: main
+    envVars:
+      - key: PORT
+        value: 10000
+      - key: NODE_ENV
+        value: production
+    autoDeploy: true
+    healthCheckPath: /health
+    disk:
+      name: sapphai-data
+      mountPath: /app/data
+      sizeGB: 1

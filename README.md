@@ -1,102 +1,108 @@
-# SapphAI – Development
+# 🧠 SapphAI – Universal AI Assistant for Games
 
-SapphAI is an open-source **multifunction AI assistant**.  
-While it is **primarily designed for games and NPCs**, it can be deployed almost anywhere an AI chat system is needed.
+![Node.js](https://img.shields.io/badge/Node.js-18+-green)
+![Docker](https://img.shields.io/badge/Docker-Supported-blue)
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow)
 
-You can use SapphAI for:
-- 🎮 Games (NPCs, companions, dialogue systems)
-- 💬 Discord bots
-- 🌐 Websites
-- 📱 Apps
-- 🖥️ Custom tools and services
-
-SapphAI runs as a **separate server**, keeping your AI logic and API keys secure and outside your main application.
+SapphAI is an **open-source, universal AI brain** designed primarily for **game NPCs**, but flexible enough to run anywhere.  
+It provides a secure, server-based AI chat system that can be deployed to games, apps, websites, bots, and tools.
 
 ---
 
 ## ✨ Features
 
-- 🧠 Intelligent AI chat and reasoning  
-- 🔌 Works with games, apps, bots, and websites  
-- ☁️ Cloud-hosted or 🖥️ self-hosted  
-- 🔐 API keys never exposed to clients  
-- ⚙️ Simple HTTP-based interface  
-- 🧩 Easy to integrate with Unity and other engines  
+- 🧠 Smart AI chat and reasoning for NPCs and assistants  
+- 🎮 Built with game development in mind (Unity-friendly)  
+- 🌍 Universal deployment (cloud, local, container, serverless)  
+- 🔐 API keys stay server-side (never inside your game build)  
+- ⚡ Simple HTTP/JSON API for easy integration  
+- 🛡️ Built-in rate limiting and safety filters  
+- 🔄 Auto-updates when deployed directly from GitHub  
+- ☁️ Free tiers available on most hosting platforms  
 
 ---
 
-## 🚀 Quick Start
+## 🚀 Quick Start – Choose Your Deployment Method
 
-### Hosting Options Comparison
+| Method | Setup Time | Coding Required | Control Level |
+|------|-----------|----------------|--------------|
+| **Cloud Hosting (Easy)** | ~2 minutes | None | Medium |
+| **Self-Hosting (Advanced)** | 10–20 minutes | Yes | Full |
 
-| Option | Best For | Difficulty | Control |
-|------|---------|-----------|---------|
-| **Option A: Cloud Hosting** | Fast setup, beginners | Very Easy | Lower |
-| **Option B: Self-Hosting** | Privacy, customization | Medium | Full |
+Both methods give you a **server URL** that your game or app connects to.  
+The **same OpenAI API key** works everywhere.
 
 ---
 
-### Option A: Easy Cloud Hosting (No Coding Needed)
+## ☁️ One-Click Deploy
 
-Deploy SapphAI with one click on your preferred platform:
+Deploy instantly to popular cloud platforms with automatic HTTPS/SSL:
 
 [![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/SachiSapph/SapphAi-Public)
-[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template)
-[![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/SachiSapph/SapphAi-Public)
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template?template=https://github.com/SachiSapph/SapphAi-Public)
+[![Deploy to Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/SachiSapph/SapphAi-Public)
 
-General steps:
-
+Steps:
 - Click a deploy button  
 - Connect your GitHub account  
-- Add your **OpenAI API key** in the platform dashboard  
-- Deploy the service  
-- Copy the generated **public URL**  
-- Use the URL in your app, game, or bot  
-
-Platform notes:
-- **Render:** Free tier, automatic HTTPS, sleeps when inactive  
-- **Railway:** Free credits, simple environment variable setup  
-- **Vercel:** Fast deployments, ideal for web services  
+- Add your `OPENAI_API_KEY` in the platform dashboard  
+- Deploy and copy the generated **public URL**  
+- Use the URL in your game or application  
 
 ---
 
-### Option B: Self-Hosting (More Control)
+## 🐳 Docker Deployment
 
-Self-hosting lets you run SapphAI on your own PC or server.  
-This is ideal if you want full control or plan to extend the system.
+Run SapphAI on **any Docker-compatible host** (VPS, NAS, local machine):
 
----
+```bash
+docker pull sachi/sapphai
+docker run -d \
+  -p 3000:3000 \
+  -e OPENAI_API_KEY=your_api_key_here \
+  sachi/sapphai
+```
 
-## 📦 Installation (Self-Hosting)
+Server will be available at:
 
-### 1. Install Required Tools
-
-Git:  
-https://git-scm.com  
-
-Node.js (LTS recommended):  
-https://nodejs.org  
-
-Visual Studio Code (recommended editor):  
-https://code.visualstudio.com  
+```bash
+http://localhost:3000
+```
 
 ---
 
-### 2. Download the Project
+## ⚡ Serverless Deployment
 
-Open VS Code and open the built-in terminal:
+SapphAI can run on **15+ platforms**, including serverless environments:
 
-- **Windows:** `Ctrl + ``  
-- **Mac:** `Cmd + ``  
+Supported examples:
+- Cloudflare Workers  
+- Vercel  
+- Netlify  
+- Railway  
+- Render  
 
-Run:
+All serverless platforms provide:
+- Automatic HTTPS  
+- Easy environment variable setup  
+- Scalable usage  
+
+---
+
+## 📦 Manual Setup (Self-Hosting)
+
+### 1. Install Requirements
+
+- Git: https://git-scm.com  
+- Node.js (LTS): https://nodejs.org  
+- VS Code (recommended): https://code.visualstudio.com  
+
+### 2. Clone the Repository
 
 ```bash
 git clone https://github.com/SachiSapph/SapphAi-Public.git
 cd SapphAi-Public
 ```
-
----
 
 ### 3. Install Dependencies
 
@@ -106,54 +112,21 @@ npm install
 
 ---
 
-### 4. Configure API Key
+## 🔧 Configuration
 
-Create a file named `.env` in the project root.
-
-Add exactly:
+Create a `.env` file in the project root:
 
 ```bash
 OPENAI_API_KEY=your_openai_api_key_here
 ```
 
-Save the file.
-
-⚠️ **Security Advice:**  
-If you push this project to GitHub, set the repository to **Private** to prevent API key or script abuse.
-
----
-
-### 5. Run Locally
-
-```bash
-npm start
-```
-
-You will receive a local server URL, for example:
-
-```bash
-http://localhost:3000
-```
-
-This URL works the same way as a cloud-hosted one.
+Notes:
+- Same API key works for **all deployment methods**
+- If you fork or clone the repo, set it to **PRIVATE** to avoid abuse
 
 ---
 
-## ⚙️ Configuration
-
-- The **same OpenAI API key** works for all hosting methods  
-- Cloud hosting:
-  - Add `OPENAI_API_KEY` as an environment variable  
-- Self-hosting:
-  - Store the key in the `.env` file  
-
-SapphAI always runs as a server and provides a **URL endpoint** for any client.
-
----
-
-## 🎮 Unity Integration
-
-Below is a simple Unity C# example for sending and receiving messages from SapphAI.
+## 🎮 Game Integration (Unity Example)
 
 ```csharp
 using UnityEngine;
@@ -162,7 +135,7 @@ using System.Collections;
 
 public class SapphAIClient : MonoBehaviour
 {
-    private string serverUrl = "https://your-sapphai-server-url/chat";
+    private string apiUrl = "https://your-sapphai-server-url/api/chat";
 
     public void SendMessage(string message)
     {
@@ -172,10 +145,10 @@ public class SapphAIClient : MonoBehaviour
     IEnumerator SendRequest(string message)
     {
         string json = "{\"message\":\"" + message + "\"}";
-        byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(json);
+        byte[] body = System.Text.Encoding.UTF8.GetBytes(json);
 
-        UnityWebRequest request = new UnityWebRequest(serverUrl, "POST");
-        request.uploadHandler = new UploadHandlerRaw(bodyRaw);
+        UnityWebRequest request = new UnityWebRequest(apiUrl, "POST");
+        request.uploadHandler = new UploadHandlerRaw(body);
         request.downloadHandler = new DownloadHandlerBuffer();
         request.SetRequestHeader("Content-Type", "application/json");
 
@@ -187,7 +160,7 @@ public class SapphAIClient : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Request failed: " + request.error);
+            Debug.LogError("AI Error: " + request.error);
         }
     }
 }
@@ -195,50 +168,59 @@ public class SapphAIClient : MonoBehaviour
 
 This same request pattern works for:
 - Discord bots  
-- Web apps  
+- Websites  
 - Mobile apps  
 - Desktop tools  
 
 ---
 
-## 🔄 Updates & Versioning
+## 📚 API Reference
 
-- This AI is **updated from time to time**
-- If you host or deploy **directly from the GitHub repository**, your server will **automatically update** when we push changes
-- If you **download the files manually**, updates will **not** apply automatically
-  - Downloaded files cannot update themselves
-  - You must pull new changes manually if you want updates
-
-This version of SapphAI is a **simple but solid chat-based AI**, designed to be integrated anywhere possible.
-
-Future and more advanced versions may:
-- Live in a **new GitHub repository**
-- Be **support-based or subscription-based**
-- Include additional features and improvements
-
-### For news, future access, or setup help, please join our Discord.
+| Method | Endpoint | Description |
+|------|---------|------------|
+| GET | `/` | Server info |
+| GET | `/health` | Health check |
+| POST | `/api/chat` | Main AI chat endpoint |
+| GET | `/api/memory/:userId` | Conversation history |
+| GET | `/api/docs` | API documentation |
 
 ---
 
-## 🤝 Support & Links
+## 🛠️ Development
 
-💬 Join our Discord (updates, development talk, support):  
-https://discord.gg/3kF8rbEUEF  
+Run the server locally in development mode:
 
-🐞 Bug reports and issues:  
-https://github.com/SachiSapph/SapphAi-Public/issues  
+```bash
+npm run dev
+```
 
-📦 Repository:  
-https://github.com/SachiSapph/SapphAi-Public  
+Run production mode:
+
+```bash
+npm start
+```
 
 ---
 
-### Final Notes
+## 🤝 Contributing & Support
 
-- This is a **chat-only AI assistant**
-- No Text-to-Speech or Speech-to-Text included
-- Designed for **games first**, but usable everywhere
-- Cloud hosting = easiest setup  
-- Self-hosting = maximum control  
+- 🐞 Issues & bug reports:  
+  https://github.com/SachiSapph/SapphAi-Public/issues  
 
-Both approaches give you a **server URL** usable by any platform.
+- 💬 Community & updates (Discord):  
+  https://discord.gg/3kF8rbEUEF  
+
+- 📦 Repository:  
+  https://github.com/SachiSapph/SapphAi-Public  
+
+---
+
+## 📄 License & Support
+
+Licensed under the **MIT License**.  
+Free to use, modify, and deploy.
+
+This repository provides a **chat-based AI assistant**.  
+Future and more advanced AI systems may be released in **separate repositories** or as **supported/subscription-based projects**.
+
+For help, updates, and future plans, join the Discord.

@@ -50,13 +50,15 @@ const chatLimiter = createRateLimiter(
 
 // Routes
 
-// Health check
+// Health check (for backend servers)
 app.get("/health", (req, res) => {
     res.status(200).json({
         status: "healthy",
         timestamp: new Date().toISOString(),
         service: "SapphAI Chat Bot",
-        version: "1.0.0"
+        version: "1.0.0",
+        environment: NODE_ENV,
+        port: PORT
     });
 });
 
@@ -73,7 +75,9 @@ app.get("/", (req, res) => {
             about: "GET /api/about",
             health: "GET /health",
             memory: "GET /api/memory/:userId"
-        }
+        },
+        deployment: "Universal backend ready",
+        supported_platforms: ["Render", "Railway", "Heroku", "AWS", "Google Cloud", "Azure", "Docker"]
     });
 });
 
@@ -171,12 +175,58 @@ app.delete("/api/memory/:userId", (req, res) => {
     }
 });
 
+// API documentation
+app.get("/api/docs", (req, res) => {
+    res.json({
+        documentation: "SapphAI API Documentation",
+        endpoints: [
+            {
+                method: "GET",
+                path: "/",
+                description: "Server information"
+            },
+            {
+                method: "GET",
+                path: "/health",
+                description: "Health check for backend servers"
+            },
+            {
+                method: "POST",
+                path: "/api/chat",
+                description: "Main chat endpoint",
+                request_body: {
+                    message: "string (required)",
+                    userId: "string (optional, default: 'anonymous')"
+                }
+            },
+            {
+                method: "GET",
+                path: "/api/memory/:userId",
+                description: "Get conversation history"
+            }
+        ],
+        deployment: {
+            docker: "docker build -t sapphai . && docker run -p 3000:3000 sapphai",
+            render: "Connect GitHub repo to Render.com",
+            railway: "Connect GitHub repo to Railway.app",
+            heroku: "git push heroku main"
+        }
+    });
+});
+
 // 404 handler
 app.use((req, res) => {
     res.status(404).json({
         error: "Not found",
         message: `Route ${req.path} not found`,
-        availableRoutes: ["/", "/health", "/api/chat", "/api/about", "/api/memory/:userId"]
+        availableRoutes: [
+            "/",
+            "/health",
+            "/api/chat",
+            "/api/about",
+            "/api/memory/:userId",
+            "/api/docs"
+        ]
     });
 });
 
@@ -186,18 +236,34 @@ app.use((err, req, res, next) => {
 
     res.status(err.status || 500).json({
         error: "Server error",
-        message: NODE_ENV === "development" ? err.message : "Something went wrong"
+        message: NODE_ENV === "development" ? err.message : "Something went wrong",
+        timestamp: new Date().toISOString()
     });
 });
 
-// Start server
-app.listen(PORT, () => {
-    console.log(`🚀 SapphAI Server running on port ${PORT}`);
-    console.log(`🌐 Environment: ${NODE_ENV}`);
-    console.log(`🤖 AI Model: ${process.env.OPENAI_MODEL || "gpt-3.5-turbo"}`);
-    console.log(`🌟 Mission: Revolutionizing gaming with lifelike AI`);
+// Universal server start for all backends (Render, Railway, Heroku, Docker, etc.)
+const HOST = process.env.HOST || '0.0.0.0';  // IMPORTANT for Docker/Render compatibility
 
-    console.log(`Creator: Solo-Developer`);
-    console.log(`Current Phase: Phase 1 - Intelligent Chat Bot`);
-    console.log(`Vision: Autonomous NPCs in games`);
+app.listen(PORT, HOST, () => {
+    console.log(`=========================================`);
+    console.log(`🚀 SapphAI Server Started Successfully`);
+    console.log(`=========================================`);
+    console.log(`📡 URL: http://${HOST === '0.0.0.0' ? 'localhost' : HOST}:${PORT}`);
+    console.log(`⚙️  Environment: ${NODE_ENV}`);
+    console.log(`🤖 AI Model: ${process.env.OPENAI_MODEL || "gpt-3.5-turbo"}`);
+    console.log(`🔧 Port: ${PORT}`);
+    console.log(`🌐 Host: ${HOST}`);
+    console.log(`=========================================`);
+    console.log(`🌟 Mission: Revolutionizing gaming with lifelike AI`);
+    console.log(`👨‍💻 Creator: Solo-Developer`);
+    console.log(`📅 Current Phase: Phase 1 - Intelligent Chat Bot`);
+    console.log(`🎯 Vision: Autonomous NPCs in games`);
+    console.log(`=========================================`);
+    console.log(`✅ Ready for deployment on:`);
+    console.log(`   • Render.com`);
+    console.log(`   • Railway.app`);
+    console.log(`   • Heroku`);
+    console.log(`   • AWS/Google Cloud/Azure`);
+    console.log(`   • Any Docker host`);
+    console.log(`=========================================`);
 });

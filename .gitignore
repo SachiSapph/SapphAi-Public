@@ -1,4 +1,163 @@
-node_modules/
+# ============================================
+# SENSITIVE FILES (NEVER COMMIT THESE)
+# ============================================
 .env
-.DS_Store
+.env.local
+.env.development
+.env.production
+.env.test
+.env.*.local
+.env.*
+.env.backup
+secrets.json
+credentials.json
+api-keys.json
+
+# ============================================
+# DEPENDENCIES & BUILD
+# ============================================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Build outputs
+dist/
+build/
+out/
+.output/
+.next/
+.cache/
+.turbo/
+
+# ============================================
+# DOCKER & CONTAINERS
+# ============================================
+docker-compose.override.yml
+.dockerignore
+.docker/
+docker-data/
+*.dockerfile
+
+# ============================================
+# DATA & DATABASES
+# ============================================
+data/
+*.db
+*.sqlite
+*.sqlite3
+database/
+storage/
+
+# ============================================
+# LOGS
+# ============================================
+logs/
 *.log
+log/
+npm-log.*
+debug.log
+
+# ============================================
+# OPERATING SYSTEM
+# ============================================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# ============================================
+# IDE & EDITOR
+# ============================================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.settings/
+*.sublime-*
+*.code-workspace
+
+# ============================================
+# TEMPORARY FILES
+# ============================================
+tmp/
+temp/
+*.tmp
+*.temp
+.cache/
+.tmp/
+.temp/
+
+# ============================================
+# BACKUP FILES
+# ============================================
+*.bak
+*.backup
+*.old
+*.orig
+*.rej
+
+# ============================================
+# PLATFORM-SPECIFIC
+# ============================================
+# Platform.sh
+.platform/local/
+
+# Render
+.render/
+
+# Railway
+.railway/
+
+# Vercel
+.vercel/
+
+# Netlify
+.netlify/
+
+# ============================================
+# AI/ML SPECIFIC
+# ============================================
+# AI model files (if you add them later)
+models/
+*.pkl
+*.h5
+*.pth
+*.pt
+*.onnx
+
+# ============================================
+# TEST & COVERAGE
+# ============================================
+coverage/
+.nyc_output/
+*.lcov
+.istanbul/
+
+# ============================================
+# MISCELLANEOUS
+# ============================================
+# Session data
+.session
+.cache/
+
+# Unity (if you add Unity integration)
+Library/
+Temp/
+Obj/
+Build/
+Builds/
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.userprefs
