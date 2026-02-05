@@ -1,178 +1,244 @@
-# SapphAI – AI Assistant for Games
+# SapphAI – Development
 
-## What is This?
+SapphAI is an open-source **multifunction AI assistant**.  
+While it is **primarily designed for games and NPCs**, it can be deployed almost anywhere an AI chat system is needed.
 
-SapphAI is an AI brain for games.  
-It is designed to make NPCs smarter and allow natural chat between players and game characters.
+You can use SapphAI for:
+- 🎮 Games (NPCs, companions, dialogue systems)
+- 💬 Discord bots
+- 🌐 Websites
+- 📱 Apps
+- 🖥️ Custom tools and services
 
-SapphAI runs as a **separate server**, not inside Unity itself.  
-This makes it safer and more flexible, because your AI logic and API keys stay outside your game build.
-
-Important notes about this version:
-- This is a **chat-bot only**
-- There is **no TTS (Text-to-Speech)**  
-- There is **no STT/SST (Speech-to-Text)**  
-- It is a **mid to high level AI chat system** made specifically for **game development**
-- It is safe to use because it runs on your own PC and GitHub / Render setup
+SapphAI runs as a **separate server**, keeping your AI logic and API keys secure and outside your main application.
 
 ---
 
-## Complete Setup Guide (5 Steps)
+## ✨ Features
 
-### Step 1: Download the Code
+- 🧠 Intelligent AI chat and reasoning  
+- 🔌 Works with games, apps, bots, and websites  
+- ☁️ Cloud-hosted or 🖥️ self-hosted  
+- 🔐 API keys never exposed to clients  
+- ⚙️ Simple HTTP-based interface  
+- 🧩 Easy to integrate with Unity and other engines  
 
-You will need **Git** and **Visual Studio Code (VS Code)**.
+---
 
-Download Git:  
-[https://git-scm.com](https://git-scm.com)
+## 🚀 Quick Start
 
-Download Visual Studio Code:  
-[https://code.visualstudio.com](https://code.visualstudio.com)
+### Hosting Options Comparison
 
-After installing both, open **VS Code**.
+| Option | Best For | Difficulty | Control |
+|------|---------|-----------|---------|
+| **Option A: Cloud Hosting** | Fast setup, beginners | Very Easy | Lower |
+| **Option B: Self-Hosting** | Privacy, customization | Medium | Full |
 
-Open the built-in terminal:
+---
+
+### Option A: Easy Cloud Hosting (No Coding Needed)
+
+Deploy SapphAI with one click on your preferred platform:
+
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/SachiSapph/SapphAi-Public)
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template)
+[![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/SachiSapph/SapphAi-Public)
+
+General steps:
+
+- Click a deploy button  
+- Connect your GitHub account  
+- Add your **OpenAI API key** in the platform dashboard  
+- Deploy the service  
+- Copy the generated **public URL**  
+- Use the URL in your app, game, or bot  
+
+Platform notes:
+- **Render:** Free tier, automatic HTTPS, sleeps when inactive  
+- **Railway:** Free credits, simple environment variable setup  
+- **Vercel:** Fast deployments, ideal for web services  
+
+---
+
+### Option B: Self-Hosting (More Control)
+
+Self-hosting lets you run SapphAI on your own PC or server.  
+This is ideal if you want full control or plan to extend the system.
+
+---
+
+## 📦 Installation (Self-Hosting)
+
+### 1. Install Required Tools
+
+Git:  
+https://git-scm.com  
+
+Node.js (LTS recommended):  
+https://nodejs.org  
+
+Visual Studio Code (recommended editor):  
+https://code.visualstudio.com  
+
+---
+
+### 2. Download the Project
+
+Open VS Code and open the built-in terminal:
+
 - **Windows:** `Ctrl + ``  
 - **Mac:** `Cmd + ``  
 
-Run these commands:
+Run:
 
 ```bash
 git clone https://github.com/SachiSapph/SapphAi-Public.git
 cd SapphAi-Public
 ```
 
-This downloads the project to your computer.
+---
+
+### 3. Install Dependencies
+
+```bash
+npm install
+```
 
 ---
 
-### Step 2: Get OpenAI API Key
+### 4. Configure API Key
 
-SapphAI uses OpenAI to power NPC intelligence.
+Create a file named `.env` in the project root.
 
-1. Go to: [https://platform.openai.com](https://platform.openai.com)
-2. Sign in or create an account
-3. Click **View API keys**
-4. Click **Create new secret key**
-5. Copy the key and keep it safe
-
-⚠️ **Important:** Never share your API key with anyone.
-⚠️ **Important:** OpenAi does require money (e.g. $10).
-
----
-
-### Step 3: Add API Key to Project
-
-Inside the project folder in VS Code:
-
-1. Create a new file named `.env`
-2. Open the file and add **exactly** this line:
+Add exactly:
 
 ```bash
 OPENAI_API_KEY=your_openai_api_key_here
 ```
 
-Replace `your_openai_api_key_here` with your real OpenAI API key.
-
 Save the file.
 
----
-
-### Step 4: Deploy to Render
-
-Render allows you to run the AI server online for free.
-
-1. Go to: [https://render.com](https://render.com)
-2. Sign up or log in
-3. Click **New +**
-4. Select **Web Service**
-5. Connect your GitHub account
-6. Select the **SapphAi-Public** repository
-7. Set the following options:
-   - Runtime: **Node**
-   - Branch: `main`
-8. Add an Environment Variable:
-   - Key: `OPENAI_API_KEY`
-   - Value: your OpenAI API key
-9. Click **Create Web Service**
-
-Wait until deployment finishes.
+⚠️ **Security Advice:**  
+If you push this project to GitHub, set the repository to **Private** to prevent API key or script abuse.
 
 ---
 
-### Step 5: Get Your Server URL
-
-After deployment is complete:
-
-1. Open your service in Render
-2. Copy the **Public URL** shown at the top
-
-Example:
+### 5. Run Locally
 
 ```bash
-https://sapphai.onrender.com
+npm start
 ```
 
-This is the server address your game will connect to.
+You will receive a local server URL, for example:
+
+```bash
+http://localhost:3000
+```
+
+This URL works the same way as a cloud-hosted one.
 
 ---
 
-## How to Use in Unity
+## ⚙️ Configuration
 
-1. Open your Unity project
-2. Decide where NPC dialogue or player chat should happen
-3. Send HTTP requests to your SapphAI server URL
-4. Send player or NPC messages as text
-5. Use the AI response for dialogue or logic
+- The **same OpenAI API key** works for all hosting methods  
+- Cloud hosting:
+  - Add `OPENAI_API_KEY` as an environment variable  
+- Self-hosting:
+  - Store the key in the `.env` file  
 
-Unity handles:
-- Animations
-- Movement
-- UI
-- Gameplay
-
-SapphAI handles:
-- Thinking
-- Conversation
-- AI responses
-
-You can connect using:
-- `UnityWebRequest`
-- Any HTTP client you prefer
+SapphAI always runs as a server and provides a **URL endpoint** for any client.
 
 ---
 
-## Troubleshooting
+## 🎮 Unity Integration
 
-If the server does not respond:
-- Check Render logs
-- Make sure deployment completed successfully
+Below is a simple Unity C# example for sending and receiving messages from SapphAI.
 
-If AI responses are missing:
-- Confirm your OpenAI API key is correct
-- Make sure the environment variable exists on Render
+```csharp
+using UnityEngine;
+using UnityEngine.Networking;
+using System.Collections;
 
-If Unity cannot connect:
-- Verify the server URL
-- Ensure it starts with `https://`
+public class SapphAIClient : MonoBehaviour
+{
+    private string serverUrl = "https://your-sapphai-server-url/chat";
 
-If the first request is slow:
-- Free Render services sleep when inactive
-- First request may take a few seconds to wake up
+    public void SendMessage(string message)
+    {
+        StartCoroutine(SendRequest(message));
+    }
+
+    IEnumerator SendRequest(string message)
+    {
+        string json = "{\"message\":\"" + message + "\"}";
+        byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(json);
+
+        UnityWebRequest request = new UnityWebRequest(serverUrl, "POST");
+        request.uploadHandler = new UploadHandlerRaw(bodyRaw);
+        request.downloadHandler = new DownloadHandlerBuffer();
+        request.SetRequestHeader("Content-Type", "application/json");
+
+        yield return request.SendWebRequest();
+
+        if (request.result == UnityWebRequest.Result.Success)
+        {
+            Debug.Log("AI Response: " + request.downloadHandler.text);
+        }
+        else
+        {
+            Debug.LogError("Request failed: " + request.error);
+        }
+    }
+}
+```
+
+This same request pattern works for:
+- Discord bots  
+- Web apps  
+- Mobile apps  
+- Desktop tools  
 
 ---
 
-## Support
+## 🔄 Updates & Versioning
 
-For updates, development discussion, and help, join our Discord:  
-[https://discord.gg/SapphAi](https://discord.gg/3kF8rbEUEF)
+- This AI is **updated from time to time**
+- If you host or deploy **directly from the GitHub repository**, your server will **automatically update** when we push changes
+- If you **download the files manually**, updates will **not** apply automatically
+  - Downloaded files cannot update themselves
+  - You must pull new changes manually if you want updates
 
-⚠️ **Security Advice:**  
-If you fork or clone this project, set your GitHub repository to **Private**.  
-This prevents others from abusing your OpenAI API key or server scripts.
+This version of SapphAI is a **simple but solid chat-based AI**, designed to be integrated anywhere possible.
 
-Bug reports and issues:  
-[https://github.com/SachiSapph/SapphAi-Public/issues](https://github.com/SachiSapph/SapphAi-Public/issues)
+Future and more advanced versions may:
+- Live in a **new GitHub repository**
+- Be **support-based or subscription-based**
+- Include additional features and improvements
 
-Main repository:  
-[https://github.com/SachiSapph/SapphAi-Public](https://github.com/SachiSapph/SapphAi-Public)
+For news, future access, or setup help, please join our Discord.
+
+---
+
+## 🤝 Support & Links
+
+💬 Join our Discord (updates, development talk, support):  
+https://discord.gg/3kF8rbEUEF  
+
+🐞 Bug reports and issues:  
+https://github.com/SachiSapph/SapphAi-Public/issues  
+
+📦 Repository:  
+https://github.com/SachiSapph/SapphAi-Public  
+
+---
+
+### Final Notes
+
+- This is a **chat-only AI assistant**
+- No Text-to-Speech or Speech-to-Text included
+- Designed for **games first**, but usable everywhere
+- Cloud hosting = easiest setup  
+- Self-hosting = maximum control  
+
+Both approaches give you a **server URL** usable by any platform.
