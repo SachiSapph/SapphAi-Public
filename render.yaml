@@ -1,34 +1,17 @@
 services:
   - type: web
-    name: SapphAi
-    env: node
-    buildCommand: npm install && npm run build
-    startCommand: npm start
-    envVars:
-      - key: NODE_ENV
-        value: production
-      - key: PORT
-        value: 10000
-    healthCheckPath: /
-    autoDeploy: true
-    disk:
-      name: data
-      mountPath: /data
-      sizeGB: 1
-
-staticSites:
-  - name: your-static-site
-    buildCommand: npm run build
-    publishPath: ./build
-    envVars:
-      - key: NODE_ENV
-        value: production
-    headers:
-      - path: /*
-        name: Cache-Control
-        value: public, max-age=3600
-
-databases:
-  - name: your-db
-    databaseName: appdb
+    name: sapphai
+    env: docker
+    dockerfilePath: ./Dockerfile
     plan: free
+    branch: main
+    envVars:
+      - key: PORT
+        value: "10000"
+      - key: NODE_ENV
+        value: production
+      - key: OPENAI_API_KEY
+        value: "ADD_YOUR_API_KEY_HERE"
+    autoDeploy: true
+    healthCheckPath: /health
+    
