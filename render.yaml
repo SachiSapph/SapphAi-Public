@@ -7,7 +7,7 @@ services:
     branch: main
     envVars:
       - key: PORT
-        value: 10000
+        value: "10000"
       - key: NODE_ENV
         value: production
     autoDeploy: true
