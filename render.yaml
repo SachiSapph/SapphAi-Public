@@ -18,5 +18,3 @@ services:
         value: "https://buy.stripe.com/cNi3cu9ju7yJcvN1rH5ZC00"
     autoDeploy: true
     healthCheckPath: /health
-    dockerContext: .
-    dockerCached: true
