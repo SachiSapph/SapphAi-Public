@@ -1,66 +1,64 @@
-# 🧠 SapphAI – Universal AI Assistant for Games
+# 🧠 SapphAI – Universal AI Assistant
 
 ![Node.js](https://img.shields.io/badge/Node.js-18+-green)
-![Docker](https://img.shields.io/badge/Docker-Supported-blue)
-![License: MIT](https://img.shields.io/badge/License-MIT-yellow)
+![Docker](https://img.shields.io/badge/Docker-Build-blue)
+![MIT License](https://img.shields.io/badge/License-MIT-yellow)
+![Render](https://img.shields.io/badge/Render-supported-blue)
+![Vercel](https://img.shields.io/badge/Vercel-supported-black)
+![Cloudflare](https://img.shields.io/badge/Cloudflare-supported-orange)
+![Railway](https://img.shields.io/badge/Railway-supported-red)
 
-SapphAI is an **open-source, universal AI brain** designed primarily for **game NPCs**, but flexible enough to run anywhere.  
-It provides a secure, server-based AI chat system that can be deployed to games, apps, websites, bots, and tools.
+SapphAI is a **universal AI assistant system** designed to deploy to **15+ platforms** from a **single codebase**. It provides a **secure, server-based AI** that is ideal for games, apps, websites, bots, and other integrations.  
+SapphAI is production-ready, supports serverless and traditional deployments, and includes health checks, rate limiting, and safety filters.
 
 ---
 
 ## ✨ Features
 
-- 🧠 Smart AI chat and reasoning for NPCs and assistants  
-- 🎮 Built with game development in mind (Unity-friendly)  
-- 🌍 Universal deployment (cloud, local, container, serverless)  
-- 🔐 API keys stay server-side (never inside your game build)  
-- ⚡ Simple HTTP/JSON API for easy integration  
-- 🛡️ Built-in rate limiting and safety filters  
-- 🔄 Auto-updates when deployed directly from GitHub  
-- ☁️ Free tiers available on most hosting platforms  
+- 🧩 **Universal Port System** (`const PORT = process.env.PORT || 3000`)  
+- 🌐 **Multi-Platform Ready**: Works on traditional servers and serverless environments  
+- 🔄 **One-Codebase Deployment**: Same code runs everywhere  
+- ⚡ **Production & Development Support** (`NODE_ENV`)  
+- 🩺 **Health Checks** (`/health`)  
+- 📚 **API Documentation** (`/api/docs`)  
+- 🛡️ **Rate Limiting & Safety Filters**  
+- 🖥️ **Docker & Serverless Support** (Render, Vercel, Cloudflare, Railway, Heroku)  
 
 ---
 
-## 🚀 Quick Start – Choose Your Deployment Method
+## 🚀 Quick Start – One-Click Deploy
 
-| Method | Setup Time | Coding Required | Control Level |
-|------|-----------|----------------|--------------|
-| **Cloud Hosting (Easy)** | ~2 minutes | None | Medium |
-| **Self-Hosting (Advanced)** | 10–20 minutes | Yes | Full |
+| Deployment Method | Setup Time | Coding Required | Control |
+|-----------------|-----------|----------------|--------|
+| **Cloud Hosting** | ~2 min | None | Medium |
+| **Self-Hosting** | 10–20 min | Yes | Full |
 
-Both methods give you a **server URL** that your game or app connects to.  
-The **same OpenAI API key** works everywhere.
+### ☁️ One-Click Deploy Buttons
 
----
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/SachiSapph/SapphAi-Public)  
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template?template=https://github.com/SachiSapph/SapphAi-Public)  
+[![Deploy to Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/SachiSapph/SapphAi-Public)  
 
-## ☁️ One-Click Deploy
-
-Deploy instantly to popular cloud platforms with automatic HTTPS/SSL:
-
-[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/SachiSapph/SapphAi-Public)
-[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template?template=https://github.com/SachiSapph/SapphAi-Public)
-[![Deploy to Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/SachiSapph/SapphAi-Public)
-
-Steps:
-- Click a deploy button  
-- Connect your GitHub account  
-- Add your `OPENAI_API_KEY` in the platform dashboard  
-- Deploy and copy the generated **public URL**  
-- Use the URL in your game or application  
+> ⚠️ **Note:** Heroku button requires `app.json` configuration for optional settings. Render deployment uses the **Render Blueprint system**.
 
 ---
 
-## 🐳 Docker Deployment
+## 🐳 Docker Deployment (Build from Source)
 
-Run SapphAI on **any Docker-compatible host** (VPS, NAS, local machine):
+Run SapphAI on any Docker-compatible host by **building from source**:
 
 ```bash
-docker pull sachi/sapphai
+docker build -t sapphai .
 docker run -d \
   -p 3000:3000 \
   -e OPENAI_API_KEY=your_api_key_here \
-  sachi/sapphai
+  sapphai
+```
+
+For local development using `docker-compose`:
+
+```bash
+npm run docker:compose
 ```
 
 Server will be available at:
@@ -73,25 +71,34 @@ http://localhost:3000
 
 ## ⚡ Serverless Deployment
 
-SapphAI can run on **15+ platforms**, including serverless environments:
+SapphAI provides a **serverless adapter** (`serverless.js`) to run on:
 
-Supported examples:
-- Cloudflare Workers  
-- Vercel  
+- Vercel (`npm run vercel:deploy`)  
+- Cloudflare Workers (`npm run cloudflare:deploy`)  
 - Netlify  
-- Railway  
-- Render  
 
-All serverless platforms provide:
-- Automatic HTTPS  
-- Easy environment variable setup  
-- Scalable usage  
+Architecture:
+- Exports the main Express app to work seamlessly in serverless environments  
+- Supports universal PORT and NODE_ENV  
+- Automatic HTTPS/SSL when deployed  
+
+---
+
+## 📦 Platform-Specific Deployment
+
+- **Render**: `npm run render:deploy` – Uses Blueprint system, free tier, Docker support  
+- **Vercel**: `npm run vercel:deploy` – Serverless functions, free tier  
+- **Cloudflare Workers**: `npm run cloudflare:deploy` – Edge deployment, free tier  
+- **Railway**: Traditional PaaS, free tier available  
+- **Heroku**: Traditional PaaS, requires `app.json`  
+
+> ⚠️ All platforms use the **same OpenAI API key**
 
 ---
 
 ## 📦 Manual Setup (Self-Hosting)
 
-### 1. Install Requirements
+### 1. Install Prerequisites
 
 - Git: https://git-scm.com  
 - Node.js (LTS): https://nodejs.org  
@@ -110,19 +117,38 @@ cd SapphAi-Public
 npm install
 ```
 
+### 4. Run Locally
+
+```bash
+npm run dev
+```
+
+Production mode:
+
+```bash
+npm start
+```
+
 ---
 
-## 🔧 Configuration
+## 🔧 Configuration (.env)
 
-Create a `.env` file in the project root:
+Required environment variables:
 
 ```bash
 OPENAI_API_KEY=your_openai_api_key_here
+PORT=3000
+NODE_ENV=development
+RATE_LIMIT_WINDOW_MS=60000
+RATE_LIMIT_MAX_REQUESTS=60
+SUPPORT_LINK=https://discord.gg/3kF8rbEUEF
 ```
 
-Notes:
-- Same API key works for **all deployment methods**
-- If you fork or clone the repo, set it to **PRIVATE** to avoid abuse
+- `OPENAI_API_KEY`: Your OpenAI API key  
+- `PORT`: Server port (default: 3000)  
+- `NODE_ENV`: development/production  
+- `RATE_LIMIT_*`: Controls rate limiting  
+- `SUPPORT_LINK`: Optional support link  
 
 ---
 
@@ -166,61 +192,54 @@ public class SapphAIClient : MonoBehaviour
 }
 ```
 
-This same request pattern works for:
-- Discord bots  
-- Websites  
-- Mobile apps  
-- Desktop tools  
+> Same integration method works for Godot, Discord bots, websites, and other clients via HTTP/JSON.
 
 ---
 
 ## 📚 API Reference
 
 | Method | Endpoint | Description |
-|------|---------|------------|
-| GET | `/` | Server info |
-| GET | `/health` | Health check |
-| POST | `/api/chat` | Main AI chat endpoint |
-| GET | `/api/memory/:userId` | Conversation history |
-| GET | `/api/docs` | API documentation |
+|--------|---------|------------|
+| GET    | `/` | Server information |
+| GET    | `/health` | Health check |
+| POST   | `/api/chat` | Main AI chat endpoint |
+| GET    | `/api/memory/:userId` | Conversation history |
+| GET    | `/api/docs` | API documentation |
 
 ---
 
-## 🛠️ Development
+## 🛠️ Development Commands
 
-Run the server locally in development mode:
-
-```bash
-npm run dev
-```
-
-Run production mode:
-
-```bash
-npm start
-```
+| Command | Description |
+|---------|------------|
+| `npm run dev` | Run development server with nodemon |
+| `npm start` | Run production server |
+| `npm run docker:compose` | Local Docker development |
+| `npm run vercel:deploy` | Deploy to Vercel |
+| `npm run cloudflare:deploy` | Deploy to Cloudflare Workers |
+| `npm run render:deploy` | Deploy to Render |
 
 ---
 
 ## 🤝 Contributing & Support
 
-- 🐞 Issues & bug reports:  
-  https://github.com/SachiSapph/SapphAi-Public/issues  
+- GitHub Issues & Discussions: https://github.com/SachiSapph/SapphAi-Public/issues  
+- Community & Support: https://discord.gg/3kF8rbEUEF  
+- Repository: https://github.com/SachiSapph/SapphAi-Public  
 
-- 💬 Community & updates (Discord):  
-  https://discord.gg/3kF8rbEUEF  
-
-- 📦 Repository:  
-  https://github.com/SachiSapph/SapphAi-Public  
+We welcome contributions, feedback, and feature requests.
 
 ---
 
-## 📄 License & Support
+## 📄 License
 
-Licensed under the **MIT License**.  
-Free to use, modify, and deploy.
+SapphAI is licensed under the **MIT License** – free to use, modify, and deploy.
 
-This repository provides a **chat-based AI assistant**.  
-Future and more advanced AI systems may be released in **separate repositories** or as **supported/subscription-based projects**.
+**Key Notes**:  
+- Works on 15+ platforms including traditional servers, serverless, and containers  
+- Free tiers available on most platforms  
+- Built-in rate limiting and content moderation  
+- Single OpenAI API key works across all deployments  
+- Automatic HTTPS/SSL on supported cloud platforms  
 
-For help, updates, and future plans, join the Discord.
+This universal deployment system provides a **secure, scalable AI** for games, apps, bots, and other projects.
