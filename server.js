@@ -14,7 +14,7 @@ const app = express();
 // Configuration
 const PORT = process.env.PORT || 3000;
 const NODE_ENV = process.env.NODE_ENV || "development";
-const SUPPORT_LINK = process.env.SUPPORT_LINK || "https://ko-fi.com/sapphai";
+const SUPPORT_LINK = process.env.SUPPORT_LINK || "https://buy.stripe.com/cNi3cu9ju7yJcvN1rH5ZC00";
 
 // Initialize SapphAI
 let sapphAI;
@@ -77,7 +77,7 @@ app.get("/", (req, res) => {
             memory: "GET /api/memory/:userId"
         },
         deployment: "Universal backend ready",
-        supported_platforms: ["Render", "Railway", "Heroku", "AWS", "Google Cloud", "Azure", "Docker"]
+        supported_platforms: ["Render", "Railway", "Heroku", "AWS", "Google Cloud", "Azure", "Docker", "Vercel", "Cloudflare"]
     });
 });
 
@@ -206,8 +206,10 @@ app.get("/api/docs", (req, res) => {
             }
         ],
         deployment: {
-            docker: "docker build -t sapphai . && docker run -p 3000:3000 sapphai",
+            docker: "docker build -t sapphai . && docker run -p $PORT:$PORT sapphai",
             render: "Connect GitHub repo to Render.com",
+            vercel: "vercel --prod",
+            cloudflare: "wrangler deploy",
             railway: "Connect GitHub repo to Railway.app",
             heroku: "git push heroku main"
         }
@@ -241,29 +243,24 @@ app.use((err, req, res, next) => {
     });
 });
 
-// Universal server start for all backends (Render, Railway, Heroku, Docker, etc.)
-const HOST = process.env.HOST || '0.0.0.0';  // IMPORTANT for Docker/Render compatibility
+// Export the app for serverless platforms
+module.exports = app;
 
-app.listen(PORT, HOST, () => {
-    console.log(`=========================================`);
-    console.log(`🚀 SapphAI Server Started Successfully`);
-    console.log(`=========================================`);
-    console.log(`📡 URL: http://${HOST === '0.0.0.0' ? 'localhost' : HOST}:${PORT}`);
-    console.log(`⚙️  Environment: ${NODE_ENV}`);
-    console.log(`🤖 AI Model: ${process.env.OPENAI_MODEL || "gpt-3.5-turbo"}`);
-    console.log(`🔧 Port: ${PORT}`);
-    console.log(`🌐 Host: ${HOST}`);
-    console.log(`=========================================`);
-    console.log(`🌟 Mission: Revolutionizing gaming with lifelike AI`);
-    console.log(`👨‍💻 Creator: Solo-Developer`);
-    console.log(`📅 Current Phase: Phase 1 - Intelligent Chat Bot`);
-    console.log(`🎯 Vision: Autonomous NPCs in games`);
-    console.log(`=========================================`);
-    console.log(`✅ Ready for deployment on:`);
-    console.log(`   • Render.com`);
-    console.log(`   • Railway.app`);
-    console.log(`   • Heroku`);
-    console.log(`   • AWS/Google Cloud/Azure`);
-    console.log(`   • Any Docker host`);
-    console.log(`=========================================`);
-});
+// Only start the server if NOT in serverless environment
+if (require.main === module) {
+    const HOST = process.env.HOST || '0.0.0.0';
+
+    app.listen(PORT, HOST, () => {
+        console.log(`=========================================`);
+        console.log(`🚀 SapphAI Server Started Successfully`);
+        console.log(`=========================================`);
+        console.log(`📡 URL: http://${HOST === '0.0.0.0' ? 'localhost' : HOST}:${PORT}`);
+        console.log(`⚙️  Environment: ${NODE_ENV}`);
+        console.log(`🤖 AI Model: ${process.env.OPENAI_MODEL || "gpt-3.5-turbo"}`);
+        console.log(`🔧 Port: ${PORT}`);
+        console.log(`🌐 Host: ${HOST}`);
+        console.log(`=========================================`);
+        console.log(`✅ Running in: ${process.env.VERCEL ? 'Vercel' : process.env.CF_PAGES ? 'Cloudflare' : 'Traditional Server'}`);
+        console.log(`=========================================`);
+    });
+}

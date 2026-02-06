@@ -3,12 +3,17 @@ services:
   sapphai:
     build: .
     ports:
-      - "${PORT:-3000}:3000"
+      - "${PORT:-3000}:${PORT:-3000}"  # Dynamic port mapping
     environment:
-      - NODE_ENV=production
-      - PORT=3000
+      - NODE_ENV=development  # Change to production for prod
+      # PORT will come from .env or default
     env_file:
-      - .env
-    volumes:
-      - ./data:/app/data
+      - .env  # Create .env file with your variables
+    # Removed volume to avoid conflicts with cloud platforms
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:${PORT:-3000}/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s

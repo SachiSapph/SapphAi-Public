@@ -8,15 +8,14 @@
         "start": "node server.js",
         "dev": "nodemon server.js",
         "docker:build": "docker build -t sapphai .",
-        "docker:run": "docker run -p 3000:3000 --env-file .env sapphai",
+        "docker:run": "docker run -p ${PORT:-3000}:${PORT:-3000} --env-file .env sapphai",
         "docker:compose": "docker-compose up",
         "render:deploy": "echo 'Connect to: https://render.com/deploy?repo=https://github.com/SachiSapph/SapphAi-Public'",
         "railway:deploy": "echo 'Connect to: https://railway.app/new/template?template=https://github.com/SachiSapph/SapphAi-Public'",
-        "build:serverless": "npx esbuild server.js --bundle --platform=node --outfile=dist/serverless.js",
-        "deploy:cloudflare": "wrangler deploy",
-        "deploy:vercel": "vercel --prod",
-        "deploy:netlify": "netlify deploy --prod",
-        "deploy:aws-lambda": "echo 'Package with: zip -r function.zip .'",
+        "vercel:dev": "vercel dev",
+        "vercel:deploy": "vercel --prod",
+        "cloudflare:dev": "wrangler dev",
+        "cloudflare:deploy": "wrangler deploy",
         "test": "echo \"No tests yet\" && exit 0",
         "lint": "eslint .",
         "format": "prettier --write ."
@@ -42,9 +41,8 @@
     },
     "devDependencies": {
         "nodemon": "^3.0.1",
-        "esbuild": "^0.19.0",
         "wrangler": "^3.0.0",
-        "@vercel/node": "^3.0.0",
+        "vercel": "^33.0.0",
         "eslint": "^8.0.0",
         "prettier": "^3.0.0"
     },
@@ -54,20 +52,19 @@
     },
     "exports": {
         ".": "./server.js",
-        "./serverless": "./dist/serverless.js"
+        "./serverless": "./serverless.js"
     },
     "files": [
-        "dist/",
         "src/",
         "config/",
         "public/",
         "server.js",
+        "serverless.js",
         "Dockerfile",
         "render.yaml",
         "Procfile",
         "wrangler.toml",
-        "vercel.json",
-        "netlify.toml"
+        "vercel.json"
     ],
     "repository": {
         "type": "git",
@@ -76,8 +73,5 @@
     "homepage": "https://github.com/SachiSapph/SapphAi-Public#readme",
     "bugs": {
         "url": "https://github.com/SachiSapph/SapphAi-Public/issues"
-    },
-    "publishConfig": {
-        "access": "public"
     }
 }
