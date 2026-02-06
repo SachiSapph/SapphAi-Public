@@ -9,9 +9,15 @@ services:
       - key: PORT
         value: "10000"
       - key: NODE_ENV
-        value: production
+        value: "production"
       - key: OPENAI_API_KEY
         value: "ADD_YOUR_API_KEY_HERE"
+      - key: RATE_LIMIT_WINDOW_MS
+        value: "900000"
+      - key: RATE_LIMIT_MAX_REQUESTS
+        value: "100"
+      - key: SUPPORT_LINK
+        value: "https://buy.stripe.com/cNi3cu9ju7yJcvN1rH5ZC00"
     autoDeploy: true
     healthCheckPath: /health
     
