@@ -41,6 +41,29 @@ SapphAI is production-ready, supports serverless and traditional deployments, an
 
 > ⚠️ **Note:** Heroku button requires `app.json` configuration for optional settings. Render deployment uses the **Render Blueprint system**.
 
+## Recommended setup: Render (Free - Beginner friendly)
+### How to:
+- Go to [render.com](https://render.com).
+- go to [Blueprints](https://dashboard.render.com/blueprints).
+- Click `+ New Blueprint Instance`.
+- Connect the Github to the blueprint.
+  - `Public Git Repository` - `Add Github Link`
+- Name the Blueprint
+  - Blueprint Name: `Add a Name`
+  - Branch: `Main`
+  - Blueprint Path: `Keep empty (render.yaml)`
+- Go to [Projects](https://dashboard.render.com).
+  - Click the Service you just created.
+- Go to `Enviroment`.
+  - Look for: `Environmental Variables`
+  - Click: `Edit` 
+  - Look for: `OPENAI_API_KEY`
+  - Add your API Key to the `Value` slot.
+  - Click: `Save, rebuild, and deploy`
+- go back to `Events`
+- Copy the `https://####.onrender.com`
+- Add it to the Unity script, or anywhere else.
+
 ---
 
 ## 🐳 Docker Deployment (Build from Source)
