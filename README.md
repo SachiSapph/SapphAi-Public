@@ -178,39 +178,136 @@ SUPPORT_LINK=https://discord.gg/3kF8rbEUEF
 ## 🎮 Game Integration (Unity Example)
 
 ```csharp
+using System;
+using System.Collections;
+using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
-using System.Collections;
+using Newtonsoft.Json;
 
-public class SapphAIClient : MonoBehaviour
 {
-    private string apiUrl = "https://your-sapphai-server-url/api/chat";
-
-    public void SendMessage(string message)
+    public class OpenAIClient : MonoBehaviour
     {
-        StartCoroutine(SendRequest(message));
+        [Header("Server Settings")]
+        [SerializeField] private string serverUrl = "";
+        [SerializeField] private int timeoutSeconds = 60;
+
+        private string GetApiEndpoint()
+        {
+            if (string.IsNullOrEmpty(serverUrl))
+            {
+                Debug.LogError("Server URL is not set!");
+                return "";
+            }
+
+            string baseUrl = serverUrl.TrimEnd('/');
+            return $"{baseUrl}/api/chat";
+        }
+
+        public void Initialize(string key)
+        {
+        }
+
+        public void SendMessage(string userMessage, Action<string> onResponse, Action<string> onError)
+        {
+            StartCoroutine(SendRequestCoroutine(userMessage, onResponse, onError));
+        }
+
+        private IEnumerator SendRequestCoroutine(string userMessage, Action<string> onResponse, Action<string> onError)
+        {
+            string apiEndpoint = GetApiEndpoint();
+            
+            if (string.IsNullOrEmpty(apiEndpoint))
+            {
+                onError?.Invoke("Server URL is not configured");
+                yield break;
+            }
+
+            ChatRequest request = new ChatRequest
+            {
+                message = userMessage
+            };
+
+            string jsonData = JsonConvert.SerializeObject(request);
+            byte[] bodyRaw = Encoding.UTF8.GetBytes(jsonData);
+
+            using (UnityWebRequest webRequest = new UnityWebRequest(apiEndpoint, "POST"))
+            {
+                webRequest.uploadHandler = new UploadHandlerRaw(bodyRaw);
+                webRequest.downloadHandler = new DownloadHandlerBuffer();
+                webRequest.certificateHandler = new AcceptAllCertificates();
+                webRequest.disposeCertificateHandlerOnDispose = true;
+                webRequest.SetRequestHeader("Content-Type", "application/json");
+                webRequest.timeout = timeoutSeconds;
+
+                yield return webRequest.SendWebRequest();
+
+                if (webRequest.result == UnityWebRequest.Result.Success)
+                {
+                    try
+                    {
+                        string responseText = webRequest.downloadHandler.text;
+                        ChatResponse response = JsonConvert.DeserializeObject<ChatResponse>(responseText);
+
+                        if (response != null && !string.IsNullOrEmpty(response.response))
+                        {
+                            onResponse?.Invoke(response.response);
+                        }
+                        else
+                        {
+                            onError?.Invoke("Invalid response from server");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        onError?.Invoke($"Failed to parse response: {ex.Message}");
+                        Debug.LogError($"Parse Error: {ex.Message}");
+                    }
+                }
+                else
+                {
+                    string errorMessage = $"{webRequest.error}";
+                    string errorDetails = webRequest.downloadHandler.text;
+
+                    if (!string.IsNullOrEmpty(errorDetails))
+                    {
+                        errorMessage += $" - {errorDetails}";
+                    }
+
+                    Debug.LogError($"Server Error: {errorMessage}");
+                    onError?.Invoke(errorMessage);
+                }
+            }
+        }
+
+        public void ClearConversation()
+        {
+        }
+
+        public void SetServerUrl(string url)
+        {
+            serverUrl = url;
+        }
     }
 
-    IEnumerator SendRequest(string message)
+    public class AcceptAllCertificates : CertificateHandler
     {
-        string json = "{\"message\":\"" + message + "\"}";
-        byte[] body = System.Text.Encoding.UTF8.GetBytes(json);
-
-        UnityWebRequest request = new UnityWebRequest(apiUrl, "POST");
-        request.uploadHandler = new UploadHandlerRaw(body);
-        request.downloadHandler = new DownloadHandlerBuffer();
-        request.SetRequestHeader("Content-Type", "application/json");
-
-        yield return request.SendWebRequest();
-
-        if (request.result == UnityWebRequest.Result.Success)
+        protected override bool ValidateCertificate(byte[] certificateData)
         {
-            Debug.Log("AI Response: " + request.downloadHandler.text);
+            return true;
         }
-        else
-        {
-            Debug.LogError("AI Error: " + request.error);
-        }
+    }
+
+    [Serializable]
+    public class ChatRequest
+    {
+        public string message;
+    }
+
+    [Serializable]
+    public class ChatResponse
+    {
+        public string response;
     }
 }
 ```
