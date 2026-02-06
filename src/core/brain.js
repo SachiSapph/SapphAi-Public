@@ -39,7 +39,7 @@ class SapphAIBrain {
         ];
 
         try {
-            // Call OpenAI
+            // Call OpenAI with timeout
             const response = await this.axios.post(
                 "https://api.openai.com/v1/chat/completions",
                 {
@@ -52,7 +52,8 @@ class SapphAIBrain {
                     headers: {
                         "Authorization": `Bearer ${this.openaiApiKey}`,
                         "Content-Type": "application/json"
-                    }
+                    },
+                    timeout: 30000 // 30 second timeout
                 }
             );
 
@@ -75,7 +76,50 @@ class SapphAIBrain {
             };
 
         } catch (error) {
-            console.error("OpenAI API Error:", error.response?.data || error.message);
+            // ENHANCED ERROR LOGGING
+            console.error("🔴 OPENAI API ERROR DETAILS:");
+
+            if (error.response) {
+                // The request was made and the server responded with a status code
+                console.error("Status Code:", error.response.status);
+                console.error("Status Text:", error.response.statusText);
+                console.error("Error Data:", JSON.stringify(error.response.data, null, 2));
+
+                // Common OpenAI errors
+                if (error.response.status === 401) {
+                    console.error("❌ INVALID API KEY - Check if OPENAI_API_KEY is correct in Render env vars");
+                } else if (error.response.status === 429) {
+                    console.error("⏱️ RATE LIMITED - Too many requests or quota exceeded");
+                } else if (error.response.status === 503) {
+                    console.error("🚫 SERVICE UNAVAILABLE - OpenAI API is down");
+                }
+            } else if (error.request) {
+                // The request was made but no response was received
+                console.error("📡 NO RESPONSE FROM OPENAI - Network issue");
+                console.error("Request Config:", {
+                    url: error.request._currentUrl || error.config?.url,
+                    method: error.config?.method,
+                    timeout: error.config?.timeout
+                });
+
+                // Check if it's a timeout
+                if (error.code === 'ECONNABORTED') {
+                    console.error("⏰ TIMEOUT - Request took too long (30s)");
+                }
+            } else {
+                // Something happened in setting up the request
+                console.error("⚙️ SETUP ERROR:", error.message);
+                console.error("Stack:", error.stack);
+            }
+
+            // Also log the API key status (first few chars only for security)
+            console.error("API Key Status:", this.openaiApiKey ?
+                `Set (starts with: ${this.openaiApiKey.substring(0, 8)}...)` :
+                "❌ NOT SET - Check OPENAI_API_KEY env var"
+            );
+            console.error("Model:", this.model);
+            console.error("User ID:", userId);
+            console.error("Message length:", userMessage.length);
 
             // Fallback response
             const fallback = this.formatter.format(
