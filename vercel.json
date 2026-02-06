@@ -1,13 +1,21 @@
 {
     "functions": {
-        "api/**": {
-            "maxDuration": 10
+        "api/serverless.js": {
+            "maxDuration": 10,
+            "memory": 1024
         }
     },
     "rewrites": [
         {
+            "source": "/api/(.*)",
+            "destination": "/api/serverless"
+        },
+        {
             "source": "/(.*)",
             "destination": "/api/serverless"
         }
-    ]
+    ],
+    "env": {
+        "NODE_ENV": "production"
+    }
 }
