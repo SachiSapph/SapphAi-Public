@@ -12,7 +12,4 @@ services:
         value: production
     autoDeploy: true
     healthCheckPath: /health
-    disk:
-      name: sapphai-data
-      mountPath: /app/data
-      sizeGB: 1
+    
